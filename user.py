@@ -20,6 +20,10 @@ class User:
             for row in user_data:
                 writer.writerow(row)
                 return self.id
+    
+    def password_test(pwd):
+        password_format = '^[a-z]+[A-Z]+[!@#$^%]+[0-8]+$'
+        return bool(re.search(password_format, pwd))
        
     def login(self):
         pass
@@ -47,7 +51,14 @@ while True :
     if user_input == 1:
         fname = input("\nenter your first name: ")
         lname = input("enter your last name: ")
-        password = input("enter your password: ")
+        while True :
+            password = input("enter your password: ")
+            if User.password_test(password) :
+                print("Your password is strong 💪🏼")
+                break
+            else:
+                print("The password you entered is weak. Please try again.")
+
         new_user =User(fname, lname, password)
         new_user.signup()
         print(f"\nwe are so happy to have you here {fname} 😊")
