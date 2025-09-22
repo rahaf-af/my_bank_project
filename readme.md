@@ -1,0 +1,3 @@
+- As a user, I want to open a checking account so that I can deposit money into my checking
+- As a user, I want to open a savings account so that I can deposit money into my savings
+- As a user, I want to open both a savings and checking account
