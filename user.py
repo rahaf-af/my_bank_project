@@ -25,8 +25,21 @@ class User:
         password_format = '^[a-z]+[A-Z]+[!@#$^%]+[0-8]+$'
         return bool(re.search(password_format, pwd))
        
-    def login(self):
-        pass
+    def login(self,id):
+        with open ("bank.csv", "r") as file:
+            reader =csv.DictReader(file)
+
+            for row in reader:
+                if row["user_id"] == id:
+                    pwd1= input("enter your password")
+                    if row["password"] == pwd1:
+                        print(f"welcome back {row["first_name"]}")
+                    else :
+                        print("the password you have intered is not correct")
+                        break
+            else:
+                print("the id you have intered is not correct")
+
 
     def logout(self,choice):
         while True:
@@ -44,7 +57,7 @@ print("\nwelcome!! to our banking system 🏦💰")
 user_input = 0
 while True :
     try:
-        user_input = int(input("\nwhat would you like to do ?\n 1)Login 2)Signup 3)Exit "))
+        user_input = int(input("\nwhat would you like to do ?\n 1)Signup  2)Login  3)Exit "))
     except ValueError:
         print("\nwrong choice please try again")
 
@@ -66,7 +79,8 @@ while True :
         break
             
     elif user_input == 2:
-        pass
+        u_id=input("enter your id")
+        User.login(u_id)
     
     elif user_input == 3:
         e_choice=input("\nAre you sure you want to exit the program?\n Y)yes N)no ").upper()
