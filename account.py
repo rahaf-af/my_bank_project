@@ -10,6 +10,13 @@ class Account:
     def deposit(self, amount):
         if amount > 0 :
             self.balance += amount
-            print(f"The amount you deposited is {amount}, and your new alance is {self.balance} ")
+            print(f"The amount you deposit is {amount}, and your new alance is {self.balance} ")
+        else:
+            print("The value you entered is incorrect.")
+
+    def withdraw(self, amount):
+        if amount > 0 :
+            self.balance -= amount
+            print(f"The amount you withdraw is {amount}, and your new alance is {self.balance} ")
         else:
             print("The value you entered is incorrect.")
