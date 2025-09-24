@@ -20,3 +20,16 @@ class Account:
             print(f"The amount you withdraw is {amount}, and your new alance is {self.balance} ")
         else:
             print("The value you entered is incorrect.")
+class SavingAccount(Account):
+
+    def __init__(self, account_user , min_balance):
+        super().__init__(account_user)
+        self.min_balance = min_balance
+
+    def withdraw(self, amount):
+        if self.balance - amount < self.min_balance :
+            self.balance -= amount
+            print(f"Cannot withdraw minimum balance requirements not met")
+        else:
+            super().withdraw(amount)
+
