@@ -17,7 +17,7 @@ while True :
                 print("Your password is strong 💪🏼")
                 break
             else:
-                print("The password you entered is weak ،\nThe password must consist of characters starting with a capital letter followed by lowercase letters,\n then a special character and finally numbers. Please try again.\nExam@123")
+                print("The password you entered is weak ،\nThe password must consist of characters starting with a capital letter followed by lowercase letters,\n then a special character and finally numbers. Please try again.\nExam@123 ")
 
         new_user = User(fname, lname, password)
         new_user.signup()
@@ -26,8 +26,8 @@ while True :
         break
             
     elif user_input == 2:
-        name =input("entar your name")
-        u_id=input("enter your id")
+        name =input("entar your name: ")
+        u_id=input("enter your id: ")
         User.login(name,u_id)
     
     elif user_input == 3:

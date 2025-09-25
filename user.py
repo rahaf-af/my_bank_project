@@ -1,5 +1,5 @@
 import sys
-import csv ,os
+import csv
 import re
 import random
 import uuid
@@ -13,10 +13,11 @@ class User:
         self.id = uuid.uuid4()
 
     def signup(self):
+
         if self.first_name!= "" and self.last_name != "" and self.password != "":
           user_data.append([self.id,self.first_name,self.last_name,self.password])  
-          file = os.path.exists("bank.csv")
-          with open("bank.csv", "a" ,newline="") as file:
+          #file = os.path.exists("users.csv")
+          with open("users.csv", "a" ,newline="") as file:
             writer = csv.writer(file , delimiter=",")
             #writer.writerow(["user_id","first_name","last_name","password","balance_checking","balance_savings"])
             #if os.path.exists("bank.csv"):
@@ -24,7 +25,8 @@ class User:
                 writer.writerow(row)
             #else:
                 #writer.writerow(["user_id","first_name","last_name","password","balance_checking","balance_savings"])
-
+                #for row in user_data:
+                    #writer.writerow(row)
         return self.id , row
             
     

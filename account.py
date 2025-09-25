@@ -20,6 +20,9 @@ class Account:
             print(f"The amount you withdraw is {amount}, and your new alance is {self.balance} ")
         else:
             print("The value you entered is incorrect.")
+    def account_info(self):
+        print(f"account_number: {self.account_number}, account user: {self.account_user},balance: {self.balance}$ ")
+
 class SavingAccount(Account):
 
     def __init__(self, account_user , min_balance):
@@ -33,3 +36,13 @@ class SavingAccount(Account):
         else:
             super().withdraw(amount)
 
+#account1=Account("rahaf")
+#account1.deposit(100000)
+#account1.deposit(-50)
+#account1.withdraw(100)
+#account1.account_info()
+
+#account2= SavingAccount("mera",1000000)
+#account2.deposit(70000)
+#account2.withdraw(1999)
+#account2.account_info()
