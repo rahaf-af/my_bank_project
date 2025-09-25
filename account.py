@@ -23,7 +23,7 @@ class Account:
             writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
             for row in account_data:
                 writer.writerow(row)
-        print("Your checking account has been created successfully ✨🎉")
+        print(f"Your {self.account_type} account has been created successfully ✨🎉")
         return row
 
     def deposit(self, amount):
@@ -46,7 +46,11 @@ class SavingAccount(Account):
 
     def __init__(self, user_id , min_balance):
         super().__init__(user_id)
+        self.account_type = "saving"
         self.min_balance = min_balance
+    
+    def create_account(self, user_id):
+        return super().create_account(user_id)
 
     def withdraw(self, amount):
         if self.balance - amount < self.min_balance :
