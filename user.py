@@ -12,6 +12,9 @@ class User:
         self.password = password
         self.id = uuid.uuid4()
 
+    def get_id(self):
+        return self.id
+
     def signup(self):
 
         if self.first_name!= "" and self.last_name != "" and self.password != "":

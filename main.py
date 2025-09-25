@@ -4,7 +4,7 @@ print("\nwelcome!! to our banking system 🏦💰")
 user_input = 0
 while True :
     try:
-        user_input = int(input("\nwhat would you like to do ?\n 1)Signup  2)Login  3)Exit "))
+        user_input = int(input("\nwhat would you like to do ?\n1)Signup  2)Login  3)Exit "))
     except ValueError:
         print("\nwrong choice please try again")
 

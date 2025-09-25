@@ -1,12 +1,30 @@
 import random
+import datetime
+import csv
+
+account_data = []
 def create_account_num():
     account_num = random.randint(10000,99999)
     return account_num
+
 class Account:
-    def __init__ (self, account_user):
-        self.account_number = create_account_num()
-        self.account_user = account_user
+    def __init__ (self, user_id):
+        self.account_id = create_account_num()
+        self.user_id = user_id
+        self.account_type = "Checking"
         self.balance = 0
+        self.status = "Active"
+        self.Creationـdate = datetime.datetime.now()
+    
+    def create_account(self):
+        account_data.append([self.user_id,self.account_id,self.account_type ,self.balance,self.status,self.Creationـdate ])
+        with open("accounts.csv", "a" ,newline="") as file:
+            writer = csv.writer(file , delimiter=",")
+            writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+            for row in account_data:
+                writer.writerow(row)
+        return row
+
     def deposit(self, amount):
         if amount > 0 :
             self.balance += amount
@@ -21,7 +39,7 @@ class Account:
         else:
             print("The value you entered is incorrect.")
     def account_info(self):
-        print(f"account_number: {self.account_number}, account user: {self.account_user},balance: {self.balance}$ ")
+        print(f"account_number: {self.account_num},balance: {self.balance}$ ")
 
 class SavingAccount(Account):
 
