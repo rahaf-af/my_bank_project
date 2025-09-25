@@ -14,15 +14,16 @@ class Account:
         self.account_type = "Checking"
         self.balance = 0
         self.status = "Active"
-        self.Creationـdate = datetime.datetime.now()
+        self.creationـdate = datetime.datetime.now()
     
-    def create_account(self):
-        account_data.append([self.user_id,self.account_id,self.account_type ,self.balance,self.status,self.Creationـdate ])
+    def create_account(self,user_id):
+        account_data.append([user_id,self.account_id,self.account_type ,self.balance,self.status,self.creationـdate ])
         with open("accounts.csv", "a" ,newline="") as file:
             writer = csv.writer(file , delimiter=",")
             writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
             for row in account_data:
                 writer.writerow(row)
+        print("Your checking account has been created successfully ✨🎉")
         return row
 
     def deposit(self, amount):
@@ -39,12 +40,12 @@ class Account:
         else:
             print("The value you entered is incorrect.")
     def account_info(self):
-        print(f"account_number: {self.account_num},balance: {self.balance}$ ")
+        print(f"account_number: {self.user_id},balance: {self.balance}$ ")
 
 class SavingAccount(Account):
 
-    def __init__(self, account_user , min_balance):
-        super().__init__(account_user)
+    def __init__(self, user_id , min_balance):
+        super().__init__(user_id)
         self.min_balance = min_balance
 
     def withdraw(self, amount):
