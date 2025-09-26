@@ -15,15 +15,15 @@ while True :
         while True :
             password = input("\nenter your password: ")
             if User.password_test(password) :
-                print("Your password is strong 💪🏼")
+                print("\nYour password is strong 💪🏼")
                 break
             else:
-                print("The password you entered is weak ،\nThe password must consist of characters starting with a capital letter followed by lowercase letters,\n then a special character and finally numbers. Please try again.\nExam@123 ")
+                print("\nThe password you entered is weak ،\nThe password must consist of characters starting with a capital letter followed by lowercase letters,\n then a special character and finally numbers. Please try again.\nExam@123 ")
 
         new_user = User(fname, lname, password)
         new_user.signup()
         print(f"\nwe are so happy to have you here {fname} 😊")
-        print(f"your id number is {new_user.id}")
+        print(f"\nyour id number is {new_user.id}")
         #break
         try:
             user_input2 = int(input("\nwhat would you like to do next 🤔 ?\n1)Create a Checking account  2)Create a Checking account "))
@@ -38,15 +38,20 @@ while True :
             except ValueError:
                 print("\nwrong choice please try again")
             if user_input3 == 1:
-                pass
+                accountId= input("\nPlease enter the account number you want to deposit money into: ")
+                m_amount = int(input("\nNow enter the amount of money you want to deposit: "))
+                #userid = new_user.get_user_id()
+                new_deposit = Account(accountId)
+                new_deposit.deposit(m_amount,accountId )
+                
             elif user_input3 == 2:
                 pass
             elif user_input3 == 3:
                 pass
 
         elif user_input2 == 2: 
-            min_b = input("Please enter your min balance ")
-            id = new_user.get_id()
+            min_b = input("\nPlease enter your min balance ")
+            id = new_user.get_user_id()
             new_account= SavingAccount(id,min_b)
             new_account.create_account(id)
 
