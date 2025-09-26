@@ -35,6 +35,7 @@ class Account:
         rows =[]
         Process_data = []
         is_found = False
+        
         if amount > 0 :
             with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
@@ -60,7 +61,7 @@ class Account:
         rows =[]
         Process_data = []
         is_found = False
-        if amount > 0 and amount >= self.balance :
+        if amount > 0 and amount <= self.balance :
             with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:

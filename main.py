@@ -44,7 +44,7 @@ while True :
                 new_deposit = Account(accountId)
                 new_deposit.deposit(m_amount,accountId )
             elif user_input3 == 2:
-                accountId= input("\nPlease enter the account number you want to deposit money into: ")
+                accountId= input("\nPlease enter the account number you want to withdraw money from: ")
                 m_amount = int(input("\nNow enter the amount of money you want to deposit: "))
                 #userid = new_user.get_user_id()
                 new_deposit = Account(accountId)
