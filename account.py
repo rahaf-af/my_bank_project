@@ -16,15 +16,19 @@ class Account:
         self.status = "Active"
         self.creationـdate = datetime.datetime.now()
     
+    
+    def get_account_id(self):
+        return self.id
+    
     def create_account(self,user_id):
         account_data.append([user_id,self.account_id,self.account_type ,self.balance,self.status,self.creationـdate ])
         with open("accounts.csv", "a" ,newline="") as file:
             writer = csv.writer(file , delimiter=",")
-            writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+            #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
             for row in account_data:
                 writer.writerow(row)
         print(f"Your {self.account_type} account has been created successfully ✨🎉")
-        return row
+        return row , self.account_id
 
     def deposit(self, amount):
         if amount > 0 :

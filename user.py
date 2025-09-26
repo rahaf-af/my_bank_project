@@ -12,7 +12,7 @@ class User:
         self.password = password
         self.id = uuid.uuid4()
 
-    def get_id(self):
+    def get_user_id(self):
         return self.id
 
     def signup(self):
