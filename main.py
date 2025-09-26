@@ -43,11 +43,16 @@ while True :
                 #userid = new_user.get_user_id()
                 new_deposit = Account(accountId)
                 new_deposit.deposit(m_amount,accountId )
-                
             elif user_input3 == 2:
-                pass
+                accountId= input("\nPlease enter the account number you want to deposit money into: ")
+                m_amount = int(input("\nNow enter the amount of money you want to deposit: "))
+                #userid = new_user.get_user_id()
+                new_deposit = Account(accountId)
+                new_deposit.withdraw(m_amount,accountId )
             elif user_input3 == 3:
                 pass
+            else:
+                print("Invalid value, try again")    
 
         elif user_input2 == 2: 
             min_b = input("\nPlease enter your min balance ")

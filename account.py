@@ -54,14 +54,35 @@ class Account:
                 print(f"\n{amount}$ has been deposited successfully ✨🎉 to account number {id} ")
                 print(f"your new alance is {self.balance}$ ")
             else:
-                print("\nDeposit failed, try again")
+                print("\nDeposit failed account not found, try again")
 
-    def withdraw(self, amount):
-        if amount > 0 :
-            self.balance -= amount
-            print(f"The amount you withdraw is {amount}, and your new alance is {self.balance} ")
-        else:
-            print("The value you entered is incorrect.")
+    def withdraw(self, amount,id):
+        rows =[]
+        Process_data = []
+        is_found = False
+        if amount > 0 and amount >= self.balance :
+            with open("accounts.csv", "r" ,newline="") as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row["account_id"]== id.strip():
+                        #print("am here!!")
+                        row["balance"] = str(int(row["balance"])- amount)
+                        self.balance -= amount
+                        is_found = True
+                    rows.append(row)
+            if is_found :           
+                with open("accounts.csv", "w" ,newline="") as file:
+                    writer = csv.DictWriter(file, fieldnames = rows[0].keys())
+                    #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+                    writer.writeheader()
+                    writer.writerows(rows)
+                print(f"\n{amount}$ has been withdrawn successfully ✨🎉 from account number {id} ")
+                print(f"\nyour new alance is {self.balance}$ ")
+            else:
+                print("\nWithdraw failed account not found, try again")
+        elif amount > self.balance:
+            print(f"Your current balance is {self.balance}$ and you cannot withdraw more than that amount.")
+            
     def account_info(self):
         print(f"account_number: {self.user_id},balance: {self.balance}$ ")
 
