@@ -39,15 +39,18 @@ class Account:
             with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    if row["account_id"] == id:
+                    if row["account_id"]== id.strip():
+                        #print("am here!!")
                         row["balance"] = str(int(row["balance"])+ amount)
                         self.balance += amount
                         is_found = True
-                        rows.append(row)
+                    rows.append(row)
             if is_found :           
                 with open("accounts.csv", "w" ,newline="") as file:
                     writer = csv.DictWriter(file, fieldnames = rows[0].keys())
-                    writer.writerow(row)
+                    #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+                    writer.writeheader()
+                    writer.writerows(rows)
                 print(f"\n{amount}$ has been deposited successfully ✨🎉 to account number {id} ")
                 print(f"your new alance is {self.balance}$ ")
             else:

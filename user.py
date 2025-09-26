@@ -46,7 +46,7 @@ class User:
                 if row["user_id"] == id:
                     pwd1= input("enter your password")
                     if row["password"] == pwd1:
-                        print(f"welcome back {row["first_name"]}")
+                        print(f"welcome back {row['first_name']}")
                     else :
                         print("the password you have intered is not correct")
                         break
@@ -57,7 +57,7 @@ class User:
     def logout(choice):
         while True:
             if choice == "Y":
-                print("\nGoodbye, we hope you come back again. 👋")
+                print("\nGoodbye, we hope you come back again. 🤞👋")
                 sys.exit()
             elif choice == "N":
                 print("\nOkay we'll take you back to the main menu.")
