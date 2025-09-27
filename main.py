@@ -1,5 +1,6 @@
 from user import User
 from account import Account ,SavingAccount
+import sys
 
 print("\nwelcome!! to our banking system 🏦💰")
 user_input = 0
@@ -25,51 +26,137 @@ while True :
         print(f"\nwe are so happy to have you here {fname} 😊")
         print(f"\nyour id number is {new_user.id}")
         #break
-        try:
-            user_input2 = int(input("\nwhat would you like to do next 🤔 ?\n1)Create a Checking account  2)Create a Checking account "))
-        except ValueError:
-            print("\nwrong choice please try again")
-        if user_input2 == 1:
-            id = new_user.get_user_id()
-            new_account= Account(id)
-            new_account.create_account(id)
+        while True:
             try:
-                user_input3 = int(input("\nwhat would you like to do next 🤔 ?\n1)deposit  2)withdraw  3)Back to the previous list "))
+                user_input2 = int(input("\nwhat would you like to do next 🤔 ?\n1)Create a Checking account  2)Create a Saving account  3)Back to the previous list "))
             except ValueError:
-                print("\nwrong choice please try again")
-            if user_input3 == 1:
-                accountId= input("\nPlease enter the account number you want to deposit money into: ")
-                m_amount = int(input("\nNow enter the amount of money you want to deposit: "))
-                #userid = new_user.get_user_id()
-                new_deposit = Account(accountId)
-                new_deposit.deposit(m_amount,accountId )
-            elif user_input3 == 2:
-                accountId= input("\nPlease enter the account number you want to withdraw money from: ")
-                m_amount = int(input("\nNow enter the amount of money you want to deposit: "))
-                #userid = new_user.get_user_id()
-                new_deposit = Account(accountId)
-                new_deposit.withdraw(m_amount,accountId )
-            elif user_input3 == 3:
-                pass
+                print("Invalid value, try again")
+                continue
+            if user_input2 == 1:
+                u_id = new_user.get_user_id()
+                new_account= Account(u_id)
+                new_account.create_account(u_id)
+                while True:
+                    try:
+                        user_input3 = int(input("\nwhat would you like to do next 🤔 ?\n1)deposit  2)withdraw  3)Transfer money 4)Back to the previous list "))
+                    except ValueError:
+                        print("\nwrong choice please try again")
+                    if user_input3 == 1:
+                        accountId= input("\nPlease enter the account number you want to deposit money into: ")
+                        d_amount = int(input("\nNow enter the amount of money you want to deposit: "))
+                        #userid = new_user.get_user_id()
+                        new_account = Account(accountId)
+                        if new_account.deposit(d_amount,accountId ):
+                            print(f"\n{d_amount}$ has been deposited successfully ✨🎉 to account number {accountId}")
+                            print(f"your new alance is {new_account.balance}$ ")
+                        else:
+                            print("\nDeposit failed account not found, try again")
+                    elif user_input3 == 2:
+                        accountId= input("\nPlease enter the account number you want to withdraw money from: ")
+                        w_amount = int(input("\nNow enter the amount of money you want to withdraw: "))
+                        new_account= Account(accountId)
+                        is_withdrawn ,new_balance = new_account.withdraw(w_amount,accountId )
+                        if is_withdrawn :
+                            print(f"\n{w_amount}$ has been withdrawn successfully ✨🎉 from account number {accountId}")
+                            print(f"\nYour new balance is {new_account.balance}$ ")
+                        else:
+                            print(f"Your current balance is {new_account.balance}$ and you cannot withdraw more than that amount.")
+
+                    elif user_input3 == 3:
+                        firs_accountId = input("Please enter the account ID you want to transfer from: ")
+                        second_accountId = input("Please enter the account ID you want to transfer to: ")
+                        transfer_amount = input("Please enter the amount you want to transfer: ")
+                        new_account  = Account(firs_accountId)
+                        if new_account.transformation(firs_accountId,second_accountId,transfer_amount ):
+                            print(f"\n{transfer_amount}$ has been transferred from account number {firs_accountId} to {second_accountId} successfully ✨🎉 ")
+                            print(f"\nYour new balance is {new_account.balance}$ ")
+                        elif transfer_amount > new_account.balance :
+                            print(f"your current balance is {new_account.balance}$, which is less than the amount {transfer_amount}$ you want to transfer.")
+                        else:
+                            print(f"The transfer failed . Please try again.")
+                            
+                    elif user_input3 == 4:
+                        break
+                    else:
+                        print("Invalid value, try again") 
+                        continue   
+
+            elif user_input2 == 2: 
+                min_b = input("\nPlease enter your min balance ")
+                id = new_user.get_user_id()
+                new_account= SavingAccount(id,min_b)
+                new_account.create_account(id)
+                u_id = new_user.get_user_id()
+                new_account= Account(u_id)
+                new_account.create_account(u_id)
+                while True:
+                    try:
+                        user_input3 = int(input("\nwhat would you like to do next 🤔 ?\n1)deposit  2)withdraw  3)Transfer money 4)Back to the previous list "))
+                    except ValueError:
+                        print("\nwrong choice please try again")
+                    if user_input3 == 1:
+                        accountId= input("\nPlease enter the account number you want to deposit money into: ")
+                        d_amount = int(input("\nNow enter the amount of money you want to deposit: "))
+                        #userid = new_user.get_user_id()
+                        new_account = Account(accountId)
+                        if new_account.deposit(d_amount,accountId ):
+                            print(f"\n{d_amount}$ has been deposited successfully ✨🎉 to account number {accountId}")
+                            print(f"your new alance is {new_account.balance}$ ")
+                        else:
+                            print("\nDeposit failed account not found, try again")
+                    elif user_input3 == 2:
+                        accountId= input("\nPlease enter the account number you want to withdraw money from: ")
+                        w_amount = int(input("\nNow enter the amount of money you want to withdraw: "))
+                        new_account= Account(accountId)
+                        is_withdrawn ,new_balance = new_account.withdraw(w_amount,accountId )
+                        if is_withdrawn :
+                            print(f"\n{w_amount}$ has been withdrawn successfully ✨🎉 from account number {accountId}")
+                            print(f"\nYour new balance is {new_account.balance}$ ")
+                        else:
+                            print(f"Your current balance is {new_account.balance}$ and you cannot withdraw more than that amount.")
+
+                    elif user_input3 == 3:
+                        firs_accountId = input("Please enter the account ID you want to transfer from: ")
+                        second_accountId = input("Please enter the account ID you want to transfer to: ")
+                        transfer_amount = input("Please enter the amount you want to transfer: ")
+                        new_account  = Account(firs_accountId)
+                        if new_account.transformation(firs_accountId,second_accountId,transfer_amount ):
+                            print(f"\n{transfer_amount}$ has been transferred from account number {firs_accountId} to {second_accountId} successfully ✨🎉 ")
+                            print(f"\nYour new balance is {new_account.balance}$ ")
+                        elif transfer_amount > new_account.balance :
+                            print(f"your current balance is {new_account.balance}$, which is less than the amount {transfer_amount}$ you want to transfer.")
+                        else:
+                            print(f"The transfer failed . Please try again.")
+                            
+                    elif user_input3 == 4:
+                        break
+                    else:
+                        print("Invalid value, try again") 
+                        continue
+            elif user_input2 == 3:
+                break
             else:
-                print("Invalid value, try again")    
-
-        elif user_input2 == 2: 
-            min_b = input("\nPlease enter your min balance ")
-            id = new_user.get_user_id()
-            new_account= SavingAccount(id,min_b)
-            new_account.create_account(id)
-
-        elif user_input2 == 3:
-            pass
-            
-            
+                print("Invalid value, try again") 
+         
     elif user_input == 2:
         name =input("entar your name: ")
         u_id=input("enter your id: ")
-        User.login(name,u_id)
+        pwd= input("enter your password: ")
+        #User.login(name,u_id,pwd)
+        if User.login(name,u_id,pwd):
+            print(f"\nwelcome back {name} 😊")
+        else:
+            print( "The information you entered is incorrect. Please try again.")
     
     elif user_input == 3:
         e_choice=input("\nAre you sure you want to exit the program?\n Y)yes N)no ").upper()
-        User.logout(e_choice)
+        if e_choice == "Y":
+                print("\nGoodbye, we hope you come back again. 🤞👋")
+                sys.exit()
+        elif e_choice == "N":
+                print("\nokay we'll take you back to the main menu.")
+                break
+        else:
+                print("\nwrong choice please try again")
+                pass
     

@@ -16,8 +16,12 @@ class Account:
         self.balance = 0
         self.status = "Active"
         self.creationـdate = datetime.datetime.now()
-    
-    
+        with open("accounts.csv", "r" ,newline="") as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if row["account_id"] == self.account_id:
+                    self.balance = int(row["balance"])
+
     def get_account_id(self):
         return self.id
     
@@ -35,15 +39,13 @@ class Account:
         rows =[]
         Process_data = []
         is_found = False
-        
-        if amount > 0 :
+        if int(amount) > 0 :
             with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if row["account_id"]== id.strip():
-                        #print("am here!!")
-                        row["balance"] = str(int(row["balance"])+ amount)
-                        self.balance += amount
+                        row["balance"] = str(int(row["balance"])+ int(amount))
+                        self.balance += int(amount)
                         is_found = True
                     rows.append(row)
             if is_found :           
@@ -52,37 +54,45 @@ class Account:
                     #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
                     writer.writeheader()
                     writer.writerows(rows)
-                print(f"\n{amount}$ has been deposited successfully ✨🎉 to account number {id} ")
-                print(f"your new alance is {self.balance}$ ")
+                return True , self.balance
             else:
-                print("\nDeposit failed account not found, try again")
+                return False
 
     def withdraw(self, amount,id):
         rows =[]
         Process_data = []
         is_found = False
-        if amount > 0 and amount <= self.balance :
-            with open("accounts.csv", "r" ,newline="") as file:
+        with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if row["account_id"]== id.strip():
-                        #print("am here!!")
-                        row["balance"] = str(int(row["balance"])- amount)
-                        self.balance -= amount
+                        self.balance =  int(row["balance"])
+                        if int(amount) <= 0 or int(amount) > int(self.balance) :
+                            return False ,self.balance
+                        self.balance -= int(amount)
+                        row["balance"] = str(self.balance)
                         is_found = True
                     rows.append(row)
-            if is_found :           
-                with open("accounts.csv", "w" ,newline="") as file:
-                    writer = csv.DictWriter(file, fieldnames = rows[0].keys())
-                    #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
-                    writer.writeheader()
-                    writer.writerows(rows)
-                print(f"\n{amount}$ has been withdrawn successfully ✨🎉 from account number {id} ")
-                print(f"\nyour new alance is {self.balance}$ ")
+        if is_found :           
+            with open("accounts.csv", "w" ,newline="") as file:
+                writer = csv.DictWriter(file, fieldnames = rows[0].keys())
+                #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+                writer.writeheader()
+                writer.writerows(rows)
+                return True , self.balance
+                
+        else:
+            return False , self.balance
+        
+    def transformation (self,account1,account2,t_amount):
+        Process_data = []
+        if self.withdraw(t_amount,account1):
+            if self.deposit(t_amount,account2):
+                return True
             else:
-                print("\nWithdraw failed account not found, try again")
-        elif amount > self.balance:
-            print(f"Your current balance is {self.balance}$ and you cannot withdraw more than that amount.")
+                return False
+        else:
+            return False
             
     def account_info(self):
         print(f"account_number: {self.user_id},balance: {self.balance}$ ")
@@ -103,15 +113,3 @@ class SavingAccount(Account):
             print(f"Cannot withdraw minimum balance requirements not met")
         else:
             super().withdraw(amount)
-
-
-#account1=Account("rahaf")
-#account1.deposit(100000)
-#account1.deposit(-50)
-#account1.withdraw(100)
-#account1.account_info()
-
-#account2= SavingAccount("mera",1000000)
-#account2.deposit(70000)
-#account2.withdraw(1999)
-#account2.account_info()

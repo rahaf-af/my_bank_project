@@ -1,4 +1,4 @@
-import sys
+
 import csv
 import re
 import random
@@ -38,40 +38,13 @@ class User:
         return bool(re.search(password_format, str(pwd)))
     
        
-    def login(self,id):
-        with open ("bank.csv", "r") as file:
+    def login(self,id,pwd1):
+        with open ("users.csv", "r") as file:
             reader =csv.DictReader(file)
 
             for row in reader:
                 if row["user_id"] == id:
-                    pwd1= input("enter your password")
                     if row["password"] == pwd1:
-                        print(f"welcome back {row['first_name']}")
+                        return True
                     else :
-                        print("the password you have intered is not correct")
-                        break
-            else:
-                print("the id you have intered is not correct")
-
-
-    def logout(choice):
-        while True:
-            if choice == "Y":
-                print("\nGoodbye, we hope you come back again. 🤞👋")
-                sys.exit()
-            elif choice == "N":
-                print("\nOkay we'll take you back to the main menu.")
-                break
-            else:
-                print("\nwrong choice please try again")
-                break
-
-
-#new_user = User("wed","fallatah","12345698")
-#print(new_user.signup())
-
-#passwor= User("hajar", "ahmad","Rof@1234" )
-#print(passwor.password_test())
-
-#log_to_acc = User("wed","70ef6969-3762-4ea0-9f51-40542bd24d86","12345698")
-#print(str(log_to_acc.login))
+                        return False
