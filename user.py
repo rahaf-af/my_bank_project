@@ -30,7 +30,7 @@ class User:
                 #writer.writerow(["user_id","first_name","last_name","password","balance_checking","balance_savings"])
                 #for row in user_data:
                     #writer.writerow(row)
-        return self.id , row
+        return self.id , row ,True
             
     
     def password_test(pwd):
