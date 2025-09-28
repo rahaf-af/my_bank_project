@@ -64,15 +64,37 @@ class Account:
         rows =[]
         Process_data = []
         is_found = False
+        is_done = False
         with open("accounts.csv", "r" ,newline="") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if row["account_id"]== id.strip():
                         self.balance =  int(row["balance"])
-                        if int(amount) <= 0 or int(amount) > int(self.balance) :
-                            return False ,self.balance
-                        self.balance -= int(amount)
-                        row["balance"] = str(self.balance)
+                        overdraft_conunter = int(row.get("overdraft_times",0))
+                        if self.status != "Active":
+                            print("\n⚠️ your account is not Active ")
+                            return False , self.balance
+                        
+                        if int(amount)<= 0:
+                            return False , self.balance
+                        
+                        
+                        if int(amount) <= int(self.balance) :
+                            self.balance -= int(amount)
+                            row["balance"] = str(self.balance)
+                            is_done = True
+                        else:
+                            if int(amount)>= 100:
+                                print("\n⚠️ you can't overdraft more than 100$")
+                            else:
+                                self.balance -= int(amount)+ 35
+                                row["balance"] = str(self.balance)
+                                overdraft_conunter +=1
+                                row["overdraft_times"]= str(overdraft_conunter)
+                                is_done = True
+                            if overdraft_conunter == 2:
+                                row["status"] = "inactive"
+
                         is_found = True
                     rows.append(row)
         if is_found :           
@@ -80,43 +102,33 @@ class Account:
                 writer = csv.DictWriter(file, fieldnames = rows[0].keys())
                 #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
                 writer.writeheader()
-                writer.writerows(rows)
-                return True , self.balance
+                writer.writerows(rows) 
+                return is_done , self.balance
                 
         else:
             return False , self.balance
         
-    def overdraf(self, amount,id):
-        overdraf_fee = 35
-        self.overdraft_limit = 200
-        rows =[]
-        is_done = False
-        if amount <= (self.balance + overdraf_fee ):
-            with open("accounts.csv", "r" ,newline="") as file:
-                    reader = csv.DictReader(file)
-                    for row in reader:
-                        if row["account_id"]== id.strip():
-                            self.balance =  int(row["balance"])
-                            user_res=input("The fee for the overdraf process is $35\n This value will be deducted from your account in addition to the value of the overdrawn balance\n Do you want to continue? Y)Yes N)No ").upper()
-                            if user_res == "Y":
-                                self.balance -= (int(amount)+ overdraf_fee)
-                                row["balance"] = str(self.balance)
-                                self.overdraft_times +=1
-                                is_done = True
-                            else:
-                                print("Try withdrawing again when your balance increases.")
-                        rows.append(row)
-            if is_done:           
-                with open("accounts.csv", "w" ,newline="") as file:
-                    writer = csv.DictWriter(file, fieldnames = rows[0].keys())
-                    #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
-                    writer.writeheader()
-                    writer.writerows(rows)
-                    return True , self.balance
-                    
-            else:
-                return False , self.balance
-
+    # def overdraft(self,amount): # copied the idea from stackoverflow
+    #  if not self.account_active:
+    #     print('account dactive')
+    #     return False
+    #  if self.overdraft_count >=2:
+    #         return False
+    #  new_balance = self.balance -amount  
+    #  if new_balance >=0:
+    #      self.balance = new_balance
+    #      print(f"You Withdrew:{amount} ,New balance", {self.balance})
+    #      return True
+    #  elif new_balance >= self.overdraft_limit:
+    #         new_balance2 = self.balance - amount - self.fee # i want to count the fee
+    #         self.balance= new_balance2 
+    #         self.overdraft_count += 1
+    #         print(f"You Withdrew:{amount} ,New balance", {new_balance2})
+    #         return True
+    #  else:# deactive
+    #     print('you overdraft the limit')
+    #     return False
+    
 
 
     def transformation (self,account1,account2,t_amount):
