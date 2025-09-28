@@ -15,6 +15,8 @@ class Account:
         self.account_type = "Checking"
         self.balance = 0
         self.status = "Active"
+        self.overdraft_times = 0
+        self.overdraft_limit = 200
         self.creationـdate = datetime.datetime.now()
         with open("accounts.csv", "r" ,newline="") as file:
             reader = csv.DictReader(file)
@@ -26,7 +28,7 @@ class Account:
         return self.id
     
     def create_account(self,user_id):
-        account_data.append([user_id,self.account_id,self.account_type ,self.balance,self.status,self.creationـdate ])
+        account_data.append([user_id,self.account_id,self.account_type ,self.balance,self.status,self.creationـdate,self.overdraft_times ])
         with open("accounts.csv", "a" ,newline="") as file:
             writer = csv.writer(file , delimiter=",")
             #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
@@ -86,16 +88,17 @@ class Account:
         
     def transformation (self,account1,account2,t_amount):
         Process_data = []
-        if self.withdraw(t_amount,account1):
+        is_withdraw , new_balance = self.withdraw(t_amount,account1)
+        if is_withdraw :
             if self.deposit(t_amount,account2):
-                return True
+                return True, new_balance
             else:
                 return False
         else:
             return False
             
-    def account_info(self):
-        print(f"account_number: {self.user_id},balance: {self.balance}$ ")
+    #def account_info(self):
+        #print(f"account_number: {self.user_id},balance: {self.balance}$ ")
 
 class SavingAccount(Account):
 
