@@ -86,6 +86,39 @@ class Account:
         else:
             return False , self.balance
         
+    def overdraf(self, amount,id):
+        overdraf_fee = 35
+        self.overdraft_limit = 200
+        rows =[]
+        is_done = False
+        if amount <= (self.balance + overdraf_fee ):
+            with open("accounts.csv", "r" ,newline="") as file:
+                    reader = csv.DictReader(file)
+                    for row in reader:
+                        if row["account_id"]== id.strip():
+                            self.balance =  int(row["balance"])
+                            user_res=input("The fee for the overdraf process is $35\n This value will be deducted from your account in addition to the value of the overdrawn balance\n Do you want to continue? Y)Yes N)No ").upper()
+                            if user_res == "Y":
+                                self.balance -= (int(amount)+ overdraf_fee)
+                                row["balance"] = str(self.balance)
+                                self.overdraft_times +=1
+                                is_done = True
+                            else:
+                                print("Try withdrawing again when your balance increases.")
+                        rows.append(row)
+            if is_done:           
+                with open("accounts.csv", "w" ,newline="") as file:
+                    writer = csv.DictWriter(file, fieldnames = rows[0].keys())
+                    #writer.writerow(["user_id","account_id","account_type","balance","status","Creationـdate"])
+                    writer.writeheader()
+                    writer.writerows(rows)
+                    return True , self.balance
+                    
+            else:
+                return False , self.balance
+
+
+
     def transformation (self,account1,account2,t_amount):
         Process_data = []
         is_withdraw , new_balance = self.withdraw(t_amount,account1)
@@ -96,6 +129,7 @@ class Account:
                 return False
         else:
             return False
+        
             
     #def account_info(self):
         #print(f"account_number: {self.user_id},balance: {self.balance}$ ")
