@@ -50,11 +50,11 @@ while True:
             continue
     while True:
         print("\nWhat would you like to do 🤔")
-        print("[1] Create a Checking account 💳")
+        print("\n[1] Create a Checking account 💳")
         print("[2] Create a Saving account 💰")
         print("[3] Create a Checking & Saving account 💳💰")
         print("[4] I already have an account 😉")
-        print("[5] Back to the previous list 🔙")
+        print("[5] Back to the main list 🔙")
         try:
             user_input1 = int(input("\nYour choice: "))
         except ValueError:
@@ -87,7 +87,7 @@ while True:
             continue
         while True:
             print("\nWhat would you like to do 🤔")
-            print("[1] Deposit 💵📥")
+            print("\n[1] Deposit 💵📥")
             print("[2] Withdraw 💸📤")
             print("[3] Transfer money 🔄💵")
             print("[4] Back to the previous list 🔙")
@@ -102,7 +102,7 @@ while True:
                 new_account = Account(accountId)
                 if new_account.deposit(d_amount,accountId ):
                     print(f"\n{d_amount}$ has been deposited successfully ✨🎉 to account number {accountId}")
-                    print(f"your new alance is {new_account.balance}$ ")
+                    print(f"Your new alance is {new_account.balance}$ ")
                 else:
                     print("\n⚠️ Deposit failed account not found, try again")
             elif user_input2 == 2:
@@ -125,12 +125,12 @@ while True:
                     print(f"\n{transfer_amount}$ has been transferred from account number {firs_accountId} to {second_accountId} successfully ✨🎉 ")
                     print(f"\nYour new balance is {new_b}$ ")
                 elif transfer_amount > new_account.balance :
-                    print(f"\nyour current balance is {new_account.balance}$, which is less than the amount {transfer_amount}$ you want to transfer.")
+                    print(f"\nYour current balance is {new_account.balance}$, which is less than the amount {transfer_amount}$ you want to transfer.")
                 else:
                     print(f"\n⚠️ The transfer failed . Please try again.")
                             
             elif user_input2 == 4:
                 break
             else:
-                print("\n⚠️ Invalid value, try again") 
+                print("\n❌ Invalid value, try again") 
                 continue   

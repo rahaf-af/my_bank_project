@@ -84,7 +84,7 @@ class Account:
                             row["balance"] = str(self.balance)
                             is_done = True
                         else:
-                            if int(amount)>= 100:
+                            if int(amount)> 100:
                                 print("\n⚠️ you can't overdraft more than 100$")
                             else:
                                 self.balance -= int(amount)+ 35
